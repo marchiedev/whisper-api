@@ -16,7 +16,7 @@ def read_root():
     return res
 
 @app.post('/voice-to-text/voice2txt')
-def generate_image_to_image(voice_file: UploadFile = File()):
+def generate_image_to_image(voice_file: UploadFile = File(), return_type: Optional[str] = Form(None)):
     is_inputs_folder_exist = os.path.exists(os.path.join(os.getcwd(), 'resources', 'inputs'))
     inputs_folder = os.path.join(os.getcwd(), 'resources', 'inputs')
 
@@ -28,6 +28,6 @@ def generate_image_to_image(voice_file: UploadFile = File()):
     with open(file_location, "wb+") as file_object:
         file_object.write(voice_file.file.read())
 
-    res = voice2txt(file_location)
+    res = voice2txt(file_location, return_type)
 
     return { "voice2txt": res }
