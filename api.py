@@ -1,7 +1,6 @@
 from typing import Union, Optional
-
 from fastapi import FastAPI, Form, UploadFile, File
-
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 #mutations
@@ -9,6 +8,18 @@ from resolver.test.query.test import test
 from resolver.whisper.mutation.voice2txt import voice2txt
 
 app = FastAPI()
+
+origins = [
+    "*"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
